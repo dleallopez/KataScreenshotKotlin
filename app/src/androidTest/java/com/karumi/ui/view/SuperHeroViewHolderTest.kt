@@ -21,6 +21,26 @@ class SuperHeroViewHolderTest : ScreenshotTest {
         compareScreenshot(holder, R.dimen.super_hero_row_height)
     }
 
+    @Test
+    fun showsSuperHeroWithLongDescription() {
+        val superHero = givenASuperHeroWithALongDescription()
+        val holder = givenASuperHeroViewHolder()
+
+        holder.render(superHero)
+
+        compareScreenshot(holder, R.dimen.super_hero_row_height)
+    }
+
+    @Test
+    fun showsSuperHeroWithLongName() {
+        val superHero = givenASuperHeroWithALongName()
+        val holder = givenASuperHeroViewHolder()
+
+        holder.render(superHero)
+
+        compareScreenshot(holder, R.dimen.super_hero_row_height)
+    }
+
     private fun givenASuperHeroViewHolder(): SuperHeroViewHolder {
         val context = getInstrumentation().targetContext
         val inflater = LayoutInflater.from(context)
