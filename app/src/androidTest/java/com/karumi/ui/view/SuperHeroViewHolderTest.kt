@@ -83,6 +83,16 @@ class SuperHeroViewHolderTest : ScreenshotTest {
         compareScreenshot(holder, R.dimen.super_hero_row_height)
     }
 
+    @Test
+    fun showsAvengerWithVeryLongNameAndShortTeam() {
+        val superHero = givenASuperHeroWithNameLength(isAvenger = true, nameLength = TextLength.VERY_LONG)
+        val holder = givenASuperHeroViewHolder()
+
+        holder.render(superHero)
+
+        compareScreenshot(holder, R.dimen.super_hero_row_height)
+    }
+
     private fun givenASuperHeroViewHolder(): SuperHeroViewHolder {
         val context = getInstrumentation().targetContext
         val inflater = LayoutInflater.from(context)
@@ -93,29 +103,19 @@ class SuperHeroViewHolderTest : ScreenshotTest {
         )
     }
 
-    private fun givenASuperHeroWithNameLength(isAvenger: Boolean = false, nameLength: TextLength): SuperHero {
+    private fun givenASuperHeroWithNameLength(isAvenger: Boolean = false,
+                                              nameLength: TextLength,
+                                              teamLength: TextLength = TextLength.NORMAL): SuperHero {
         val superHeroName = getTestTextByLength(nameLength)
         val superHeroDescription = "Description Super Hero"
-        val isAvenger = false
-        return givenASuperHero(superHeroName, superHeroDescription, isAvenger)
-    }
-
-    private fun givenASuperHeroWithALongName(): SuperHero {
-        val superHeroName = """
-            |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            |incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-            |ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-            |voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            |proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            |""".trimMargin()
-        val superHeroDescription = "Description Super Hero"
-        val isAvenger = false
-        return givenASuperHero(superHeroName, superHeroDescription, isAvenger)
+        val superHeroTeam = getTestTextByLength(teamLength)
+        return givenASuperHero(superHeroName, superHeroDescription, isAvenger, superHeroTeam)
     }
 
     private fun givenASuperHero(
             superHeroName: String = "Super Hero Name",
             superHeroDescription: String = "Super Hero Description",
-            isAvenger: Boolean = false
-    ): SuperHero = SuperHero(superHeroName, null, isAvenger, superHeroDescription, null)
+            isAvenger: Boolean = false,
+            superHeroTeam: String? = null
+    ): SuperHero = SuperHero(superHeroName, null, isAvenger, superHeroDescription, superHeroTeam)
 }
