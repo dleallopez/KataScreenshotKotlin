@@ -35,7 +35,7 @@ class SuperHeroViewHolderTest : ScreenshotTest {
 
     @Test
     fun showsSuperHeroWithNoName() {
-        val superHero = givenASuperHeroWithNameLength(TextLength.EMPTY)
+        val superHero = givenASuperHeroWithNameLength(nameLength = TextLength.EMPTY)
         val holder = givenASuperHeroViewHolder()
 
         holder.render(superHero)
@@ -45,7 +45,7 @@ class SuperHeroViewHolderTest : ScreenshotTest {
 
     @Test
     fun showsSuperHeroWithShortName() {
-        val superHero = givenASuperHeroWithNameLength(TextLength.SHORT)
+        val superHero = givenASuperHeroWithNameLength(nameLength = TextLength.SHORT)
         val holder = givenASuperHeroViewHolder()
 
         holder.render(superHero)
@@ -55,7 +55,7 @@ class SuperHeroViewHolderTest : ScreenshotTest {
 
     @Test
     fun showsSuperHeroWithLongName() {
-        val superHero = givenASuperHeroWithNameLength(TextLength.LONG)
+        val superHero = givenASuperHeroWithNameLength(nameLength = TextLength.LONG)
         val holder = givenASuperHeroViewHolder()
 
         holder.render(superHero)
@@ -65,7 +65,17 @@ class SuperHeroViewHolderTest : ScreenshotTest {
 
     @Test
     fun showsSuperHeroWithVeryLongName() {
-        val superHero = givenASuperHeroWithNameLength(TextLength.VERY_LONG)
+        val superHero = givenASuperHeroWithNameLength(nameLength = TextLength.VERY_LONG)
+        val holder = givenASuperHeroViewHolder()
+
+        holder.render(superHero)
+
+        compareScreenshot(holder, R.dimen.super_hero_row_height)
+    }
+
+    @Test
+    fun showsAvengerWithVeryLongName() {
+        val superHero = givenASuperHeroWithNameLength(isAvenger = true, nameLength = TextLength.VERY_LONG)
         val holder = givenASuperHeroViewHolder()
 
         holder.render(superHero)
@@ -83,7 +93,7 @@ class SuperHeroViewHolderTest : ScreenshotTest {
         )
     }
 
-    private fun givenASuperHeroWithNameLength(nameLength: TextLength): SuperHero {
+    private fun givenASuperHeroWithNameLength(isAvenger: Boolean = false, nameLength: TextLength): SuperHero {
         val superHeroName = getTestTextByLength(nameLength)
         val superHeroDescription = "Description Super Hero"
         val isAvenger = false
