@@ -125,7 +125,9 @@ class MainActivityTest : AcceptanceTest<MainActivity>(MainActivity::class.java) 
             SuperHero(
                     superHeroName, null, avengers,
                     superHeroDescription,
-                    null
+                    null,
+                    true
+
             )
         }
 
@@ -142,7 +144,8 @@ class MainActivityTest : AcceptanceTest<MainActivity>(MainActivity::class.java) 
                     photo = null,
                     isAvenger = id % 2 == 0,
                     description = superHeroDescription,
-                    team = null
+                    team = null,
+                    isAvailable = true
             )
         }
 
@@ -160,7 +163,8 @@ class MainActivityTest : AcceptanceTest<MainActivity>(MainActivity::class.java) 
                     photo = null,
                     isAvenger = id % 2 == 0,
                     description = superHeroDescription,
-                    team = null
+                    team = null,
+                    isAvailable = true
             )
         }
 

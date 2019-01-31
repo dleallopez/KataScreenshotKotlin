@@ -93,6 +93,26 @@ class SuperHeroViewHolderTest : ScreenshotTest {
         compareScreenshot(holder, R.dimen.super_hero_row_height)
     }
 
+    @Test
+    fun showsAvailableSuperHero() {
+        val superHero = givenASuperHero()
+        val holder = givenASuperHeroViewHolder()
+
+        holder.render(superHero)
+
+        compareScreenshot(holder, R.dimen.super_hero_row_height)
+    }
+
+    @Test
+    fun showsUnavailableSuperHero() {
+        val superHero = givenASuperHero(isAvailable = false)
+        val holder = givenASuperHeroViewHolder()
+
+        holder.render(superHero)
+
+        compareScreenshot(holder, R.dimen.super_hero_row_height)
+    }
+
     private fun givenASuperHeroViewHolder(): SuperHeroViewHolder {
         val context = getInstrumentation().targetContext
         val inflater = LayoutInflater.from(context)
@@ -116,6 +136,7 @@ class SuperHeroViewHolderTest : ScreenshotTest {
             superHeroName: String = "Super Hero Name",
             superHeroDescription: String = "Super Hero Description",
             isAvenger: Boolean = false,
-            superHeroTeam: String? = null
-    ): SuperHero = SuperHero(superHeroName, null, isAvenger, superHeroDescription, superHeroTeam)
+            superHeroTeam: String? = null,
+            isAvailable : Boolean = true
+    ): SuperHero = SuperHero(superHeroName, null, isAvenger, superHeroDescription, superHeroTeam, isAvailable)
 }

@@ -17,6 +17,7 @@ class SuperHeroViewHolder(
     private val photoImageView: ImageView = itemView.findViewById(R.id.iv_super_hero_photo)
     private val nameTextView: TextView = itemView.findViewById(R.id.tv_super_hero_name)
     private val avengersBadgeView: View = itemView.findViewById(R.id.iv_avengers_badge)
+    private val superHeroAvailabilityIndicator: ImageView = itemView.findViewById(R.id.iv_superHero_availability)
 
     fun render(superHero: SuperHero) {
         hookListeners(superHero)
@@ -24,6 +25,7 @@ class SuperHeroViewHolder(
             renderSuperHeroPhoto(photo)
             renderSuperHeroName(name, team)
             renderAvengersBadge(isAvenger)
+            renderAvailability(isAvailable)
         }
     }
 
@@ -45,5 +47,13 @@ class SuperHeroViewHolder(
 
     private fun renderAvengersBadge(isAvenger: Boolean) {
         avengersBadgeView.visibility = if (isAvenger) View.VISIBLE else View.GONE
+    }
+
+    private fun renderAvailability(isAvailable: Boolean) {
+        val icon = when {
+            isAvailable -> R.drawable.ic_available
+            else -> R.drawable.ic_unavailable
+        }
+        superHeroAvailabilityIndicator.setImageResource(icon)
     }
 }

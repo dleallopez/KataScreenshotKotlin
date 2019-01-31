@@ -1,5 +1,10 @@
 package com.karumi.utils
 
+import com.karumi.data.repository.SuperHeroRepository
+import com.karumi.domain.model.SuperHero
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.whenever
+
 enum class TextLength { EMPTY, SHORT, NORMAL, LONG, VERY_LONG }
 
 const val SHORT_TEXT = "A"
@@ -15,3 +20,24 @@ fun getTestTextByLength(textLength: TextLength, id: Int = 0): String =
             TextLength.LONG -> "$LONG_TEXT - $id"
             TextLength.VERY_LONG -> "$VERY_LONG_TEXT - $id"
         }
+
+fun givenSuperHero(
+        repository: SuperHeroRepository,
+        isAvenger: Boolean = false,
+        nameLength: TextLength = TextLength.NORMAL,
+        descriptionLength: TextLength = TextLength.NORMAL,
+        isAvailable: Boolean = true
+): SuperHero {
+    val superHero = SuperHero(
+            name = getTestTextByLength(textLength = nameLength),
+            photo = null,
+            isAvenger = isAvenger,
+            description = getTestTextByLength(descriptionLength),
+            team = null,
+            isAvailable = isAvailable
+    )
+
+    whenever(repository.getByName(any())).thenReturn(superHero)
+
+    return superHero
+}

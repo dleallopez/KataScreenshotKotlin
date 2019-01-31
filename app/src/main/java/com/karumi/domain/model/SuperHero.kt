@@ -5,5 +5,6 @@ data class SuperHero(
         val photo: String?,
         val isAvenger: Boolean,
         val description: String,
-        val team: String?
+        val team: String?,
+        val isAvailable: Boolean
 )

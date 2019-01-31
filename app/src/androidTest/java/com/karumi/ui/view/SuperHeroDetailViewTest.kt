@@ -7,9 +7,7 @@ import com.github.salomonbrys.kodein.instance
 import com.karumi.data.repository.SuperHeroRepository
 import com.karumi.domain.model.SuperHero
 import com.karumi.utils.TextLength
-import com.karumi.utils.getTestTextByLength
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.whenever
+import com.karumi.utils.givenSuperHero
 import org.junit.Test
 import org.mockito.Mock
 
@@ -24,7 +22,7 @@ class SuperHeroDetailViewTest : AcceptanceTest<SuperHeroDetailActivity>(SuperHer
 
     @Test
     fun showsProperlyNormalSuperHeroGivenOne() {
-        val superHero = givenSuperHero()
+        val superHero = givenSuperHero(repository)
 
         val activity = startActivityWithSuperHero(superHero)
 
@@ -33,7 +31,7 @@ class SuperHeroDetailViewTest : AcceptanceTest<SuperHeroDetailActivity>(SuperHer
 
     @Test
     fun showsProperlyAvengerGivenOne() {
-        val superHero = givenSuperHero(isAvenger = true)
+        val superHero = givenSuperHero(repository, isAvenger = true)
 
         val activity = startActivityWithSuperHero(superHero)
 
@@ -42,7 +40,7 @@ class SuperHeroDetailViewTest : AcceptanceTest<SuperHeroDetailActivity>(SuperHer
 
     @Test
     fun showsSuperHeroWithVeryLongName() {
-        val superHero = givenSuperHero(nameLength = TextLength.VERY_LONG)
+        val superHero = givenSuperHero(repository, nameLength = TextLength.VERY_LONG)
 
         val activity = startActivityWithSuperHero(superHero)
 
@@ -51,7 +49,7 @@ class SuperHeroDetailViewTest : AcceptanceTest<SuperHeroDetailActivity>(SuperHer
 
     @Test
     fun showsSuperHeroWithVeryLongDescription() {
-        val superHero = givenSuperHero(descriptionLength = TextLength.VERY_LONG)
+        val superHero = givenSuperHero(repository, descriptionLength = TextLength.VERY_LONG)
 
         val activity = startActivityWithSuperHero(superHero)
 
@@ -60,7 +58,7 @@ class SuperHeroDetailViewTest : AcceptanceTest<SuperHeroDetailActivity>(SuperHer
 
     @Test
     fun showsSuperHeroWithVeryLongNameAndDescription() {
-        val superHero = givenSuperHero(nameLength = TextLength.VERY_LONG,
+        val superHero = givenSuperHero(repository, nameLength = TextLength.VERY_LONG,
                 descriptionLength = TextLength.VERY_LONG)
 
         val activity = startActivityWithSuperHero(superHero)
@@ -70,7 +68,7 @@ class SuperHeroDetailViewTest : AcceptanceTest<SuperHeroDetailActivity>(SuperHer
 
     @Test
     fun showsSuperHeroWithEmptyName() {
-        val superHero = givenSuperHero(nameLength = TextLength.EMPTY)
+        val superHero = givenSuperHero(repository, nameLength = TextLength.EMPTY)
 
         val activity = startActivityWithSuperHero(superHero)
 
@@ -79,7 +77,7 @@ class SuperHeroDetailViewTest : AcceptanceTest<SuperHeroDetailActivity>(SuperHer
 
     @Test
     fun showsSuperHeroWithEmptyDescription() {
-        val superHero = givenSuperHero(descriptionLength = TextLength.EMPTY)
+        val superHero = givenSuperHero(repository, descriptionLength = TextLength.EMPTY)
 
         val activity = startActivityWithSuperHero(superHero)
 
@@ -88,30 +86,12 @@ class SuperHeroDetailViewTest : AcceptanceTest<SuperHeroDetailActivity>(SuperHer
 
     @Test
     fun showsSuperHeroWithShortNameAndDescription() {
-        val superHero = givenSuperHero(nameLength = TextLength.SHORT,
+        val superHero = givenSuperHero(repository, nameLength = TextLength.SHORT,
                 descriptionLength = TextLength.SHORT)
 
         val activity = startActivityWithSuperHero(superHero)
 
         compareScreenshot(activity)
-    }
-
-    private fun givenSuperHero(
-            isAvenger: Boolean = false,
-            nameLength: TextLength = TextLength.NORMAL,
-            descriptionLength: TextLength = TextLength.NORMAL
-    ): SuperHero {
-        val superHero = SuperHero(
-                name = getTestTextByLength(textLength = nameLength),
-                photo = null,
-                isAvenger = isAvenger,
-                description = getTestTextByLength(descriptionLength),
-                team = null
-        )
-
-        whenever(repository.getByName(any())).thenReturn(superHero)
-
-        return superHero
     }
 
     private fun startActivityWithSuperHero(superHero: SuperHero): SuperHeroDetailActivity {
