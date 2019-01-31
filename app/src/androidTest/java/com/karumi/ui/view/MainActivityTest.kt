@@ -23,16 +23,59 @@ class MainActivityTest : AcceptanceTest<MainActivity>(MainActivity::class.java) 
         compareScreenshot(activity)
     }
 
+    @Test
+    fun showsHeroesListIfThereAreSomeSuperHeroes() {
+        givenThereAreSomeSuperHeroes(5)
+
+        val activity = startActivity()
+
+        compareScreenshot(activity)
+    }
+
+    @Test
+    fun showsHeroesListIfThereAreSomeAvengers() {
+        givenThereAreSomeSuperHeroes(5, avengers = true)
+
+        val activity = startActivity()
+
+        compareScreenshot(activity)
+    }
+
+    @Test
+    fun showsHeroesListGivenThereAreMixedRegularSuperHeroesAndAvengers() {
+        givenThereAreMixedRegularSuperHeroesAndAvengers(10)
+
+        val activity = startActivity()
+
+        compareScreenshot(activity)
+    }
+
     private fun givenThereAreSomeSuperHeroes(
-        numberOfSuperHeroes: Int = 1,
-        avengers: Boolean = false
+            numberOfSuperHeroes: Int = 1,
+            avengers: Boolean = false
     ): List<SuperHero> {
         val superHeroes = IntRange(0, numberOfSuperHeroes - 1).map { id ->
             val superHeroName = "SuperHero - $id"
             val superHeroDescription = "Description Super Hero - $id"
             SuperHero(
-                superHeroName, null, avengers,
-                superHeroDescription
+                    superHeroName, null, avengers,
+                    superHeroDescription
+            )
+        }
+
+        whenever(repository.getAllSuperHeroes()).thenReturn(superHeroes)
+        return superHeroes
+    }
+
+    private fun givenThereAreMixedRegularSuperHeroesAndAvengers(totalNumberOfSuperHeroes: Int = 1): List<SuperHero> {
+        val superHeroes = IntRange(0, totalNumberOfSuperHeroes - 1).map { id ->
+            val superHeroName = "SuperHero - $id"
+            val superHeroDescription = "Description Super Hero - $id"
+            SuperHero(
+                    name = superHeroName,
+                    photo = null,
+                    isAvenger = id % 2 == 0,
+                    description = superHeroDescription
             )
         }
 
