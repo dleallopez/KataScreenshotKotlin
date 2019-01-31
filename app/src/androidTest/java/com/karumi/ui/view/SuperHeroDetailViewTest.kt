@@ -103,9 +103,10 @@ class SuperHeroDetailViewTest : AcceptanceTest<SuperHeroDetailActivity>(SuperHer
     ): SuperHero {
         val superHero = SuperHero(
                 name = getTestTextByLength(textLength = nameLength),
-                isAvenger = isAvenger,
                 photo = null,
-                description = getTestTextByLength(descriptionLength)
+                isAvenger = isAvenger,
+                description = getTestTextByLength(descriptionLength),
+                team = null
         )
 
         whenever(repository.getByName(any())).thenReturn(superHero)

@@ -117,5 +117,5 @@ class SuperHeroViewHolderTest : ScreenshotTest {
             superHeroName: String = "Super Hero Name",
             superHeroDescription: String = "Super Hero Description",
             isAvenger: Boolean = false
-    ): SuperHero = SuperHero(superHeroName, null, isAvenger, superHeroDescription)
+    ): SuperHero = SuperHero(superHeroName, null, isAvenger, superHeroDescription, null)
 }

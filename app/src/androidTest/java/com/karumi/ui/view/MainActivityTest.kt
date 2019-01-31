@@ -124,7 +124,8 @@ class MainActivityTest : AcceptanceTest<MainActivity>(MainActivity::class.java) 
             val superHeroDescription = "Description Super Hero - $id"
             SuperHero(
                     superHeroName, null, avengers,
-                    superHeroDescription
+                    superHeroDescription,
+                    null
             )
         }
 
@@ -140,7 +141,8 @@ class MainActivityTest : AcceptanceTest<MainActivity>(MainActivity::class.java) 
                     name = superHeroName,
                     photo = null,
                     isAvenger = id % 2 == 0,
-                    description = superHeroDescription
+                    description = superHeroDescription,
+                    team = null
             )
         }
 
@@ -157,7 +159,8 @@ class MainActivityTest : AcceptanceTest<MainActivity>(MainActivity::class.java) 
                     name = superHeroName,
                     photo = null,
                     isAvenger = id % 2 == 0,
-                    description = superHeroDescription
+                    description = superHeroDescription,
+                    team = null
             )
         }
 

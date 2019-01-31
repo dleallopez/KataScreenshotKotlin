@@ -50,11 +50,17 @@ class SuperHeroDetailActivity : BaseActivity(), SuperHeroDetailPresenter.View {
     }
 
     override fun showSuperHero(superHero: SuperHero) {
-        tv_super_hero_name.text = superHero.name
-        tv_super_hero_description.text = superHero.description
-        iv_avengers_badge.visibility =
-                if (superHero.isAvenger) View.VISIBLE else View.GONE
-        iv_super_hero_photo.setImageBackground(superHero.photo)
+        with(superHero) {
+            val value = when {
+                team.isNullOrBlank() -> name
+                else -> "$name - $team"
+            }
+            tv_super_hero_name.text = value
+            tv_super_hero_description.text = description
+            iv_avengers_badge.visibility =
+                    if (isAvenger) View.VISIBLE else View.GONE
+            iv_super_hero_photo.setImageBackground(photo)
+        }
     }
 
     override val activityModules = Module(allowSilentOverride = true) {

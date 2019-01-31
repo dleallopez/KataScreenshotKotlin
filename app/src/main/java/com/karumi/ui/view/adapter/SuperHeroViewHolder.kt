@@ -10,8 +10,8 @@ import com.karumi.ui.presenter.SuperHeroesPresenter
 import com.karumi.ui.utils.setImageBackground
 
 class SuperHeroViewHolder(
-    itemView: View,
-    private val presenter: SuperHeroesPresenter
+        itemView: View,
+        private val presenter: SuperHeroesPresenter
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val photoImageView: ImageView = itemView.findViewById(R.id.iv_super_hero_photo)
@@ -20,9 +20,11 @@ class SuperHeroViewHolder(
 
     fun render(superHero: SuperHero) {
         hookListeners(superHero)
-        renderSuperHeroPhoto(superHero.photo)
-        renderSuperHeroName(superHero.name)
-        renderAvengersBadge(superHero.isAvenger)
+        with(superHero) {
+            renderSuperHeroPhoto(photo)
+            renderSuperHeroName(name, team)
+            renderAvengersBadge(isAvenger)
+        }
     }
 
     private fun hookListeners(superHero: SuperHero) {
@@ -33,8 +35,12 @@ class SuperHeroViewHolder(
         photoImageView.setImageBackground(photo)
     }
 
-    private fun renderSuperHeroName(name: String) {
-        nameTextView.text = name
+    private fun renderSuperHeroName(name: String, team: String?) {
+        val value = when {
+            team.isNullOrBlank() -> name
+            else -> "$name - $team"
+        }
+        nameTextView.text = value
     }
 
     private fun renderAvengersBadge(isAvenger: Boolean) {
